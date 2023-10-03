@@ -55,7 +55,7 @@ class Logear:
             abrir.Manager()
             self.__init__()
 
-       # print("usuario: ",usuario," contraseña: ",pasword)
+        print("usuario: ",usuario," contraseña: ",pasword)
         
         
 
