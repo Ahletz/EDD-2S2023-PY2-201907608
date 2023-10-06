@@ -1,12 +1,15 @@
+#IMPORTAR TKINTER
 from tkinter import *
 from tkinter import ttk
 
+#IMPORTAR CLASES CREADAS
 from Acciones_login import *
 from Ventana import *
 
-abrir = PM()
+abrir = PM() #VENTANA DEL PM
 
-pulsado = Loger()
+pulsado = Loger() #VERIFICACION DE ENTRADA
+
 
 class Logear:
 

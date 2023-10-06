@@ -12,4 +12,6 @@ class PM:
         self.root.resizable(0,0) #NO HACER MAS GRANDE LA VENTANA
 
         self.root.mainloop() #MANTENER LA VENTANA ABIERTA
+
+        
         
