@@ -1,6 +1,6 @@
-from Login import *
+from Ventana import *
 
-Start = Logear() #INICIAR LOGIN
+inicio = Inicio()
 
 
 
