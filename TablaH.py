@@ -12,7 +12,7 @@ class Tabla():
         new = NH(id,nombre,password,puesto) #CREACION DE NODO TABLA HASH
 
         if index <self.tamaño: #TAMAÑO DE LA TABLA COMPROBACION
-            #try:
+            try:
                 if not (index in self.table): #SI EL INDICE AUN NO ESTA DENTRO DE LA TABLA
                     self.table[index] = new #SE AGREGA EL VALOR DE LA TABLA HASH Y EL CONTENIDO A LA TUPLA
                     self.utility +=1 # SE AGREGA 1 DATO A LA UTILIZACION DE LA TABLA
@@ -29,8 +29,8 @@ class Tabla():
                     self.capacidad() #CAPACIDAD TABLA HASH
                     
             
-            #except:
-               #print("FATAL ERROR INSERT!")
+            except:
+               print("FATAL ERROR INSERT!")
 
 
     def CalculoInd(self, id): #CALCULO DEL INDICE DEL NUEVO DATO EN LA TABLA HASH
@@ -90,7 +90,7 @@ class Tabla():
 
         else: 
 
-            newPosicion = newId - self.capacidad #CAMBIO DE LUGAR SI EXCEDE EL TAMAÑO DE LA TABLA
+            newPosicion = newId - self.tamaño #CAMBIO DE LUGAR SI EXCEDE EL TAMAÑO DE LA TABLA
             newPosicion = self.NewIndex(newPosicion) #AGREGAR A LA TABLA HASH EN POSICION
 
         return newPosicion #RETORNAR POSICION

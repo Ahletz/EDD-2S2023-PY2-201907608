@@ -1,6 +1,7 @@
 #IMPORTAR LIBRERIAS TKINTER
 from tkinter import *
 from tkinter import ttk, filedialog, messagebox
+import csv
 
 #IMPORTAR COMPONENTES
 
@@ -53,12 +54,14 @@ class Inicio:
 
             self.rootLOG.destroy()
             self.Principal(1)
+            self.__init__()
            
                         
         elif entro == "USUARIO":
 
             self.rootLOG.destroy()
             self.Principal(2)
+            self.__init__()
 
         elif entro == "NO_IN":
             messagebox.showerror("Error de inicio de sesión", "Credenciales incorrectas")
@@ -82,11 +85,11 @@ class Inicio:
 
     def ComponenetesMG(self):
 
-        boton1 = Button(text="CARGAR CSV", command= acciones.Cargar_csv)
-        boton2 = Button(text="CARGAR JSON")
-        boton3 = Button(text="PROYECTOS Y TAREAS")
+        boton1 = Button(text="CARGAR CSV", command= self.CargarTabla)
+        boton2 = Button(text="CARGAR JSON", command=self.Abrir_Json_AVL)
+        boton3 = Button(text="PROYECTOS Y TAREAS", command=self.Area_texto_Json)
         boton4 = Button(text="EMPLEADOS", command=self.tabla_empleados)
-        boton5 = Button(text="REPORTE PROYECTOS")
+        boton5 = Button(text="REPORTE PROYECTOS",command=self.Mostrar_Arbol_AVL)
         boton6 = Button(text="REPORTE TAREAS")
 
         imagen = PhotoImage(file="usuario.png") #IMAGEN USUARIO
@@ -113,15 +116,26 @@ class Inicio:
     def tabla_empleados(self):
 
         # Crear un Treeview con 4 columnas
-        tree = ttk.Treeview( columns=("Índice", "ID", "Nombre", "Puesto"))
+        self.tree = ttk.Treeview( columns=("Índice", "ID", "Nombre", "Puesto"))
 
         # Configurar las columnas
-        tree.heading("#0", text="Índice")
-        tree.heading("#1", text="ID")
-        tree.heading("#2", text="Nombre")
-        tree.heading("#3", text="Puesto")
+        self.tree.heading("#1", text="Índice")
+        self.tree.heading("#2", text="ID")
+        self.tree.heading("#3", text="Nombre")
+        self.tree.heading("#4", text="Puesto")
 
-        tree.pack(padx=20,pady=170)
+        self.tree.pack(padx=20,pady=170)
+
+    def Area_texto_Json(self):
+
+        self.area_texto = Text(height=750, width=300, state='disabled')
+        self.area_texto.place(x=50,y=150)
+        self.Insertar_texto()
+
+    def Insertar_texto(self):
+        self.area_texto.config(state="normal")
+        self.area_texto.insert("contenido_Json")
+        self.area_texto.config(state="disabled")
 
 
     def ComponenetesUSER(self):
@@ -150,6 +164,42 @@ class Inicio:
 
         Img.place(x=600,y=50)
         Img.config(width=100,height=100)
+
+    def CargarTabla(self):
+
+        direccion = acciones.CargarCSV()
+        if direccion:
+            try:
+                # Intenta abrir y leer el archivo CSV
+                with open(direccion, newline='') as csvfile:
+                    lector_csv = csv.reader(csvfile)
+                    next(lector_csv)  # Omitir la primera línea (títulos de las columnas)
+                    for fila in lector_csv:
+                        # Suponiendo que cada fila tiene cuatro campos (id, nombre, contraseña y puesto)
+                        id, nombre, contraseña, puesto = fila
+
+                        index = tablah.CalculoInd(id)
+
+                        No = str(tablah.NewIndex(index))
+                        
+                        self.tree.insert("", "end", values=(No,id,nombre, puesto,"")) #ingresar los datos dentro de la tabla hash
+
+            except Exception as e:
+               print("Error al abrir el archivo CSV:", e)
+
+    def Abrir_Json_AVL(self):
+
+        acciones.cargar_archivo_json()
+
+
+    def Mostrar_Arbol_AVL(self):
+
+        Arbol.graficar()
+
+
+    
+
+
 
 
 
